@@ -1,0 +1,22 @@
+
+from googletrans import Translator
+
+import  json
+import requests
+
+translater = Translator()
+
+print("Buscador de Elementos de la Tabla Periodica")
+
+nombreElemento = input("Ingrese el nombre del elemento en ingles o español:") 
+
+out = translater.translate(nombreElemento , dest="en")
+print(out.text)
+
+elementoTraducido = out.text
+
+response = requests.get(f'https://periodic-table-api.herokuapp.com/atomicName/{elementoTraducido}').json()
+
+print(f"- Simbolo de Elemento: {response['symbol']}\n- Nombre de Elemento: {response['name']}\n- Grupo: {response['groupBlock']}\n- Número Atómico: {response['atomicNumber']}\n- Número Másico: {response['atomicMass']}\n- Estados de Oxidación: {response['oxidationStates']}\n- Configuración Electrónica: {response['electronicConfiguration']}\n- Electronegatividad: {response['electronegativity']}")
+
+                            
